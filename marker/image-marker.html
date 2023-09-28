@@ -1,0 +1,36 @@
+<script>
+
+    initMap();
+function initMap() {
+  // var position = new google.maps.LatLng(52.108563, 11.633052);
+
+  // var map = new google.maps.Map(document.getElementById('my-google-map'), {
+  //   center: position,
+  //   zoom: 16
+  // });
+      var locations = [
+        ['Beach One', -33.890542, 151.274856],
+        ['Beach Two', -33.923036, 151.259052],
+        ['Beach Three', -34.028249, 151.157507],
+        ['Beach Four', -33.80010128657071, 151.28747820854187],
+        ['Beach Five', -33.950198, 151.259302]
+    ];
+    var pos = new google.maps.LatLng(52.108563, 11.633052)
+    var map = new google.maps.Map(document.getElementById('my-google-map'), {
+      center:pos,
+      zoom:16,
+    });
+
+    var marker = new google.maps.Marker({
+      position:pos,
+      map:map,
+      icon:{
+        url:'./marker.png',
+        size:new google.maps.Size(50, 50),
+        origin:new google.maps.Point(0, 0),
+        anchor:new google.maps.Point(50, 50),
+      }
+    })
+
+  
+</script>
