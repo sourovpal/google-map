@@ -1,0 +1,114 @@
+<!--TODO:
+Calculate:
+Distance Between two points.
+
+Take lattidtude and longitude of two points
+--><div class="container">
+    <table width="100%">
+
+        <tr>
+          <td width="50%">
+              <h2>Location 1</h2>
+              <input id="lat1" type="text" placeholder="Latitude" onchange="calculateDistance()" />
+              <input id="long1" type="text" placeholder="Longitude" onchange="calculateDistance()" />
+              <h2>Location 2</h2>
+              <input id="lat2" type="text" placeholder="Latitude" onchange="calculateDistance()" />
+              <input id="long2" type="text" placeholder="Longitude" onchange="calculateDistance()" />
+              <br>
+              <br>
+              <button class="btn btn-primary" onclick="calculateDistance()">Calculate</button>
+          </td>
+          <td>
+            <div id=answer>
+              <h4>Distance: <span id="distance"></span></h4>
+              <h4>Time Difference: <span id="timeDiff"></span></h4>
+            </div>
+          </td>
+        </tr>
+        </div>
+
+
+        <script>
+
+            //Converts coordinates in degrees to radians.
+            function toRad(degrees) {
+            return degrees * Math.PI / 180;
+            }
+            //Harvensine Formula
+            function calculateDistance() {
+            //Get values of our inputs
+            var lat1 = document.getElementById('lat1').value;
+            var lon1 = document.getElementById('long1').value;
+            var lat2 = document.getElementById('lat2').value;
+            var lon2 = document.getElementById('long2').value;
+            // Radius of earth, KM 
+            var radiusOfEarth = 6371;
+            var lattitudeDifference = lat2 - lat1;
+            var dLat = toRad(lattitudeDifference);
+            var longitudeDifference = lon2 - lon1;
+            var dLon = toRad(longitudeDifference);
+            /*
+            a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+            c = 2 ⋅ atan2( √a, √(1−a) )
+            d = R ⋅ c
+            where	φ is latitude, λ is longitude, R is earth’s radius
+            Assumes that the earth radius is 6,371 KM
+            */
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var distance = radiusOfEarth * c;
+            distance = parseFloat(distance).toFixed(2);
+            var distanceInMiles = 0.62137119 * distance
+            distanceInMiles = parseFloat(distanceInMiles).toFixed(2);
+            document.getElementById('distance').innerHTML = distance + " km, or " + distanceInMiles + "mi.";
+            getTime1(lat1, lon1);
+            getTime2(lat2, lon2);
+            }
+            var time1 = "";
+            var time2 = "";
+            //Using the Timezone DB API
+            function getTime1(lat, lng) {
+            var tz = new TimeZoneDB;
+            var returnValue = "Blank";
+            tz.getJSON({
+                key: "W5OG3X1XCNK1",
+                lat: lat,
+                lng: lng
+            }, function(data) {
+                setTime(data.timestamp, 1);
+            });
+            }
+
+            function getTime2(lat, lng) {
+            var tz = new TimeZoneDB;
+            var returnValue = "Blank";
+            tz.getJSON({
+                key: "W5OG3X1XCNK1",
+                lat: lat,
+                lng: lng
+            }, function(data) {
+                setTime(data.timestamp, 2);
+            });
+            }
+
+            function updateTime() {
+            timeDifference = time1 - time2;
+            document.getElementById('timeDiff').innerHTML = Math.abs(timeDifference) + " hours.";
+            }
+
+            function setTime(data, timeToSet) {
+            var date = new Date(data * 1000);
+            if (timeToSet == 1) {
+                time1 = date.getHours();
+            } else {
+                time2 = date.getHours();
+            }
+            updateTime();
+            }
+
+
+
+
+        </script>
