@@ -1,3 +1,5 @@
 Color change marker =>>>>>>>>>>>>>>>>> https://codepen.io/unconditional/embed/qdbJGE?height=500&theme-id=dark&slug-hash=qdbJGE&default-tab=result&user=unconditional&pen-title=&preview=false&name=cp_embed_1
 
 Outsite menu active =>>>>>>>>>>>>>>>>> https://codepen.io/thomasclausen/pen/avagdy
+
+eaflet-gps-tracker-simulation-with-interface =>>>>>>>>>>>>>>>>>>> https://codepen.io/ersel420/full/eYrMVmV
